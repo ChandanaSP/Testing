@@ -3,8 +3,8 @@ def add(a, b):
 
 
 def test_add():
-    add(2, 3)
-    add('space', 'ship')
+    assert add(2, 3)
+    assert add('space', 'ship')
 
 
 def subtract(a, b):
