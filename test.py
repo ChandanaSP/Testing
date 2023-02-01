@@ -1,16 +1,7 @@
-def add(a, b):
-    return a + b
+# testing Fibonacci number function
+def fib(n: int) -> int:
+    return n if n < 2 else fib(n-1)+fib(n-2)
 
 
-def test_add():
-    assert add(2, 3)
-    assert add('space', 'ship')
-
-
-def subtract(a, b):
-    return a + b  # <--- fix this in step 7
-
-
-# uncomment the following test in step 5
-# def test_subtract():
-#    assert subtract(2, 3) == -1
+def test_fibonacci():
+    assert fib(10) == 55 # It was 54 before
