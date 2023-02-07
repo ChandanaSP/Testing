@@ -1,21 +1,31 @@
 name: Notify
 
+# triggers for notifying
+#  these are some important trigger cases could be change as need
+# check here https://developer.github.com/webhooks/
 on:
-  push:
-    branches: [ main ]
+  issue_comment:
+    types: created
+  issues:
+    types: [opened, edited, pinned, closed, reopened, assigned, labeled]
   pull_request:
-    branches: [ main ]
+    types: [opened, closed, edited, ready_for_review, review_requested, reopened]
+  pull_request_review_comment:
+    types: created
+  push:
 
 jobs:
-
-  notifyTelegram:
+  build:
+    name: Notifier
     runs-on: ubuntu-latest
+
     steps:
-    - name: send custom message
-      uses: appleboy/telegram-action@master
+    - name: Notifier
+      uses: GokulDas027/TelegramBridge@master
+      if: always()
       with:
         to: ${{ secrets.TELEGRAM_TO }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          The ${{ github.event_name }} event triggered final step.
-          echo This event is a pull request that had an assignee removed.
+        status: ${{ job.status }} # don't change
+        event: ${{ github.event_name }} # don't change
+        actor: ${{ github.actor }} # don't change
